@@ -1,13 +1,7 @@
-//Utilizando o Axios
-//Enviando uma requisição GET para API, para listar todos os hogos
-
-
-//Capturar botão de Criar Jogo
 const createBtn = document.getElementById("createBtn")
 
 createBtn.addEventListener("click", createMovie)
 
-//Capturar botão de Edição
 const updateBtn = document.getElementById("updateBtn")
 
 updateBtn.addEventListener("click", updateMovie)
@@ -19,13 +13,10 @@ then(response => {
     filmes.forEach(filme => {
         let item = document.createElement("li")
 
-        //setando o Atributo ID para cada game
         item.setAttribute("data-id", filme._id)
         item.setAttribute("data-titulo", filme.titulo)
         item.setAttribute("data-ano", filme.ano)
         item.setAttribute("data-categoria", filme.categoria)
-
-        //const id = listItem.getAttibute("data-id")
 
         item.innerHTML = `<h4> ${filme.titulo}</h4>
         <p>Ano: ${filme.ano}</p>
@@ -35,7 +26,6 @@ then(response => {
         var deleteBTN = document.createElement("button")
         deleteBTN.innerHTML = "Deletar"
         deleteBTN.classList.add("btn", "btn-danger", "mb-3", "mx-2")
-        //quando clickar no botão
         deleteBTN.addEventListener("click", function(){
             deleteFilme(item)
         })
@@ -55,17 +45,15 @@ then(response => {
 })
 
 
-//Função para deletar um game
 function deleteFilme(listItem){
-
     const id = listItem.getAttribute("data-id")
     axios.delete(`http://localhost:5000/filmes/${id}`).
     then(response => {
-        window.alert("Game deletado com sucesso:", response.data)
+        window.alert("Filme deletado com sucesso:", response.data)
         listItem.remove()
     })
     .catch(error =>{
-        window.alert("Erro ao deletar o Game", error)
+        window.alert("Erro ao deletar o Filme", error)
     })
 
 }
@@ -74,7 +62,7 @@ function deleteFilme(listItem){
 
         const form = document.getElementById("createForm")
         form.addEventListener("submit" , function(event){
-            event.preventDefault() //Evita o envio padrão do formulário
+            event.preventDefault()
         })
 
         const tituloInput = document.getElementById("titulo")
@@ -89,7 +77,6 @@ function deleteFilme(listItem){
 
         console.log(filme)
 
-        //Enviando as informações do game para API
 axios.post("http://localhost:5000/filmes", filme).then(response =>{
 
 if (response.status ==201){
@@ -101,9 +88,6 @@ if (response.status ==201){
 })
 
     }
-
-
-    //Função para carregar o formiulário de edição
 
     function loadForm(listItem){
         const id = listItem.getAttribute("data-id")
